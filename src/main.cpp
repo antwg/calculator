@@ -42,7 +42,7 @@ std::vector<std::string> separate_words(const std::string& sentence){
  * function for each call.
  * 
  * @param registerHandler A RegisterHandler
- * @param arguments The command that is to be handled
+ * @param user_input The input to handle
  */
 void handle_command(RegisterHandler& registerHandler, std::string& user_input){
     std::vector<std::string> arguments = separate_words(user_input);
