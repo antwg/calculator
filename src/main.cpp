@@ -1,7 +1,7 @@
 /**
  * @file RegisterHandler.hpp
  * @author Anton Wegeström (anton.wegestrom@gmail.com)
- * @brief This is the main file of the program. It runs the main program
+ * @brief This is the main file of the program. It runs the main function
  * and has functions for interpreting user inputs.
  * @version 0.1
  * @date 2023-02-08
@@ -9,6 +9,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <set>
@@ -86,13 +87,26 @@ std::vector<std::string> separate_words(const std::string& words){
  */
 int main(int argc, char *argv[]){
     RegisterHandler registerHandler;
+    std::string user_input;
     if (argc == 2){ // Read from file
+        std::fstream file;
+        std::string fileName = argv[1];
+        file.open(fileName);
+        if (file.is_open()){
+            while (std::getline(file, user_input)){
+                std::vector<std::string> arguments = separate_words(user_input);
+                handle_command(registerHandler, arguments);
+            }
+        }
+        else{
+            std::cout << "File not found\n";
+        }
+        file.close();
         //std::cout << "Read file: " << argv[1] << "\n";
     }
     else { // Read from standard input
         while(true){ // Ask for commands until told to quit
             std::cout << "Enter a line: "; 
-            std::string user_input;
             std::getline(std::cin, user_input);
             std::vector<std::string> arguments = separate_words(user_input);
             handle_command(registerHandler, arguments);
