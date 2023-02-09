@@ -12,33 +12,21 @@ void RegisterHandler::print(RegisterHandler& registerHandler, std::vector<std::s
 int RegisterHandler::print_helper(std::string reg){
     int total_value = 0;
     for (auto [operation, value] : registers[reg]){
-        if (is_number(value)){
-            if (operation == "add"){
-                total_value += stoi(value);
-            }
-            else if (operation == "subtract"){
-                total_value -= stoi(value);
-            }
-            else if (operation == "multiply"){
-                total_value *= stoi(value);
-            }
+        // if value is already a number -> add it, 
+        // else recurse until number calculated.
+        int new_value = is_number(value) ? stoi(value) : print_helper(value);
+        if (operation == "add"){
+            total_value += new_value;
         }
-        else {
-            // Recurse
-            if (operation == "add"){
-                total_value += print_helper(value);
-            }
-            else if (operation == "subtract"){
-                total_value -= print_helper(value);
-            }
-            else if (operation == "multiply"){
-                total_value *= print_helper(value);
-            } 
+        else if (operation == "subtract"){
+            total_value -= new_value;
+        }
+        else if (operation == "multiply"){
+            total_value *= new_value;
         }
     }
     return total_value;
 }
-
 
 bool RegisterHandler::is_number(const std::string& number){
     for (char digit : number){

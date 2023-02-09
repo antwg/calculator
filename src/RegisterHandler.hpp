@@ -16,21 +16,12 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <set>
 
 class RegisterHandler{
-    private:
-        std::map<std::string, std::vector<std::pair<std::string, std::string>>> registers;
-
-        /**
-         * @brief Checks if a string is a number or not
-         * 
-         * @param number The string to check
-         * @return true if it's a number
-         * @return false if it's not a number
-         */
-        bool is_number(const std::string& number);
-    
     public:
+        std::set<std::string> operations = {"add", "subtract", "multiply"};
+
         /**
          * @brief Adds an operation and a value to a register. The operation
          * and value can later be combined to calculate a result. 
@@ -48,6 +39,18 @@ class RegisterHandler{
          * @param arguments Contains the print keyword and the register to be printed.
          */
         void print(RegisterHandler& registerHandler, std::vector<std::string>& arguments);
+    
+    private:
+        std::map<std::string, std::vector<std::pair<std::string, std::string>>> registers;
+
+        /**
+         * @brief Checks if a string is a number or not
+         * 
+         * @param number The string to check
+         * @return true if it's a number
+         * @return false if it's not a number
+         */
+        bool is_number(const std::string& number);
 
         /**
          * @brief Performs most of what is needed to print. Checks all the operation-value 
